@@ -17,6 +17,6 @@ document.getElementById('questionForm').addEventListener('submit', function(even
     })
     .catch((error) => {
         console.error('Error:', error);
-        alert('there was an error sending your question. sorry!');
+        alert('there was an error sending your question. sorry! :(');
     });
 });
