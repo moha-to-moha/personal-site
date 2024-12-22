@@ -1,14 +1,30 @@
-<html>
-    <head>
-        <title>q/a questions (admin mode)</title>
-    </head>
-    <body>
-        <h1>
-            admin mode, questions
-        </h1>
-        <div>
-            <p>go to the console to see questions!</p>
-        </div>
-        <a href="index.html">home</a>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>access q/a</title>
+</head>
+<body>
+    <h1>access q/a</h1>
+    <div id="questionDisplay"></div>
+    <a href="index.html">home</a>
+    <script>
+        const questionDisplay = document.getElementById('questionDisplay');
+        const keys = Object.keys(localStorage).filter(key => key.startsWith('question_'));
+
+        if (keys.length > 0) {
+            keys.sort((a, b) => parseInt(a.split('_')[1]) - parseInt(b.split('_')[1]));
+            keys.forEach(key => {
+                const question = localStorage.getItem(key);
+                const timestamp = new Date(parseInt(key.split('_')[1])).toLocaleString();
+                const newP = document.createElement('p');
+                newP.textContent = `${timestamp}: ${question}`;
+                questionDisplay.appendChild(newP);
+            });
+        } else {
+            questionDisplay.innerHTML = '<p>no questions submitted yet.</p>';
+        }
+    </script>
+</body>
 </html>
