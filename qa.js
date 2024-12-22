@@ -3,7 +3,7 @@ document.getElementById('questionForm').addEventListener('submit', function(even
 
     const question = document.getElementById('question').value;
 
-    fetch('https://moha-to-moha.github.io/accessqa.html', {
+    fetch('https://moha-to-moha.github.io/personal-site/accessqa.html', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
