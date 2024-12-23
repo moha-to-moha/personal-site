@@ -4,27 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>access q/a</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyARJ-SfvCn-mNdH5AOPl3KuDb-Yja6jwiQ",
+            authDomain: "question-taker.firebaseapp.com",
+            projectId: "question-taker",
+            storageBucket: "question-taker.firebasestorage.app",
+            messagingSenderId: "347974415629",
+            appId: "1:347974415629:web:53017b7fdac4ff297c6c44",
+            measurementId: "G-T13H3VYE09"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function displayQuestions() {
+            const querySnapshot = await getDocs(collection(db, "questions"));
+            const questionDisplay = document.getElementById('questionDisplay');
+            questionDisplay.innerHTML = '';
+
+            querySnapshot.forEach((doc) => {
+                const questionData = doc.data();
+                const timestamp = new Date(questionData.timestamp).toLocaleString();
+                const newP = document.createElement('p');
+                newP.textContent = `${timestamp}: ${questionData.question}`;
+                questionDisplay.appendChild(newP);
+            });
+        }
+
+        window.onload = displayQuestions;
+    </script>
 </head>
 <body>
     <h1>access q/a</h1>
     <div id="questionDisplay"></div>
     <a href="index.html">home</a>
-    <script>
-        const questionDisplay = document.getElementById('questionDisplay');
-        const keys = Object.keys(localStorage).filter(key => key.startsWith('question_'));
-
-        if (keys.length > 0) {
-            keys.sort((a, b) => parseInt(a.split('_')[1]) - parseInt(b.split('_')[1]));
-            keys.forEach(key => {
-                const question = localStorage.getItem(key);
-                const timestamp = new Date(parseInt(key.split('_')[1])).toLocaleString();
-                const newP = document.createElement('p');
-                newP.textContent = `${timestamp}: ${question}`;
-                questionDisplay.appendChild(newP);
-            });
-        } else {
-            questionDisplay.innerHTML = '<p>no questions submitted yet.</p>';
-        }
-    </script>
 </body>
 </html>

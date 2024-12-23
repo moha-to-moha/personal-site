@@ -3,17 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>q/a</title>
+    <title>questions</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyARJ-SfvCn-mNdH5AOPl3KuDb-Yja6jwiQ",
+            authDomain: "question-taker.firebaseapp.com",
+            projectId: "question-taker",
+            storageBucket: "question-taker.firebasestorage.app",
+            messagingSenderId: "347974415629",
+            appId: "1:347974415629:web:53017b7fdac4ff297c6c44",
+            measurementId: "G-T13H3VYE09"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function saveQuestion(question) {
+            try {
+                await addDoc(collection(db, "questions"), {
+                    question: question,
+                    timestamp: new Date().getTime()
+                });
+                alert('Your question has been sent.');
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        }
+
+        document.getElementById('questionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const question = document.getElementById('question').value;
+            saveQuestion(question);
+        });
+    </script>
 </head>
 <body>
-    <h1>q/a</h1>
+    <h1>questions</h1>
     <form id="questionForm">
-        <label for="question">your question:</label>
+        <label for="question">ask me a question</label>
+        <br>
         <input type="text" id="question" name="question" required>
-        <button type="submit">send</button>
+        <br>
+        <button type="submit">ask</button>
     </form>
+    <br>
     <a href="index.html">home</a>
-    <script src="qa.js"></script>
 </body>
 </html>
-
