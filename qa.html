@@ -33,10 +33,10 @@
                     timestamp: new Date().getTime()
                 });
                 console.log("Document written with ID: ", docRef.id);
-                alert('Your question has been sent.');
+                alert('your question has been sent');
             } catch (e) {
                 console.error("Error adding document: ", e);
-                alert('Error sending your question. Please try again.');
+                alert('error sending your question, please try again');
             }
         }
 
@@ -50,7 +50,7 @@
 <body>
     <h1>questions</h1>
     <form id="questionForm">
-        <label for="question">ask me a question (currently down)</label>
+        <label for="question">ask me a question (anonymous)</label>
         <br>
         <input type="text" id="question" name="question" required>
         <br>
