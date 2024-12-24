@@ -28,24 +28,38 @@
             const q = query(collection(db, "questions"), orderBy("timestamp", "desc"));
             const querySnapshot = await getDocs(q);
             const questionDisplay = document.getElementById('questionDisplay');
+            const questionCount = document.getElementById('count');
             questionDisplay.innerHTML = '';
 
+            let count = 0;
             querySnapshot.forEach((doc) => {
                 const questionData = doc.data();
                 const timestamp = new Date(questionData.timestamp).toLocaleString();
                 const newP = document.createElement('p');
                 newP.textContent = `${timestamp}: ${questionData.question}`;
                 questionDisplay.appendChild(newP);
+                count++;
             });
+
+            questionCount.textContent = `question count: ${count}`;
         }
 
         // Call the function to display questions when the page loads
         window.onload = displayQuestions;
     </script>
+    <style>
+        .count {
+            position: fixed;
+            bottom: -0.5%;
+            right: 0.5%;
+        }
+    </style>
 </head>
 <body>
     <h1>access q/a</h1>
     <div id="questionDisplay"></div>
+    <p id="count" class="count">question count: 0</p>
     <a href="index.html">home</a>
 </body>
 </html>
+
